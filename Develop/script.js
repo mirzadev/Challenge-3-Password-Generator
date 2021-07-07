@@ -17,28 +17,32 @@ function getRandomSymbol(){
   return symbols[Math.floor(Math.random() * symbols.length)];
   } 
   var promptCriteria = window.prompt("Which Criteria to include in the password ?");
-if (promptCriteria === "Random"){
-    window.alert("Please select length of the password" );
-} else {
-    window.alert("Please select the length of the password in next screen" );
-}
-
-var promptPassword = window.prompt("Please select the length of the Password");
-if (promptPassword < 7){
+  if (promptCriteria === "Random"){
+      window.alert("Welcome to password Challenge" );
+  } else {
+      window.alert("Please select the length of the password in next screen" );
+  } 
+  var promptPassword = parseInt(window.prompt("Please select the length of the Password"));
+if (promptPassword <8){
     window.alert("Minimum Password Length is: 8 character" );
-}else if (promptPassword > 128) {
+}else if (promptPassword >128) {
     window.alert("Maximum Password Length is: 128 character" );
 } else {
-    window.alert("Please confirm whether or not to include lowercase, uppercase, numeric, and/or special characters" );
+    window.alert("Please select password character types" );
 }
 
-var promptCharacterType = window.prompt("Please confirm whether or not to include lowercase, uppercase, numeric, and/or special characters");
+var upperCase=window.confirm("Do you want upper case characters");
+var lowerCase=window.confirm("Do you want lower case characters");
+var number1=window.confirm("Do you want numbers characters");
+var symbols1=window.confirm("Do you want symbols characters");
+
+/*
 if (promptCriteria === "OK" || promptCriteria === "ok" || promptCriteria === "Ok"){
     window.alert("Please generate the password" );
 } else {
     window.alert("You are not eligible to see the password" );
 }
-
+*/
 //DOM Elements
 
 var resultEl = document.getElementById('result');
@@ -61,17 +65,34 @@ generateEl.addEventListener("click", writePassword);
 // Generate Password function
 function generatePassword(lower, upper, number, symbol, length){
   var generatedPassword = '';
-  var typesArray = [{lower}, {upper}, {number}, {symbol}];
+  var typesArray = [];
+  if (upperCase){
+    typesArray.push({upper})
+  }
+  if (lowerCase){
+    typesArray.push({lower})
+  }
+  if (number1){
+    typesArray.push({number})
+  }
+  if (symbols1){
+    typesArray.push({symbol})
+  }
+  console.log(typesArray);
+  
   //console.log('typeArray: ', typesArray);
 
-  for (var length=8; length<=128; length++){
+  console.log(promptPassword);
+  for (var length=0; length<promptPassword; length++){
     //console.log(length);
-    typesArray.forEach(type => {
-      var funcName = Object.keys(type) [0];
-      generatedPassword += randomFunc [funcName]();
-    });
+ 
+      var type = typesArray[Math.floor(Math.random() * typesArray.length)];
+      var funcName = Object.keys(type)[0];
+      console.log(funcName);
+      generatedPassword += randomFunc[funcName]();
+    
   }
-  var finalPassword = generatedPassword.slice(8, 128);
+  var finalPassword = generatedPassword;
   return finalPassword;
   
 }
